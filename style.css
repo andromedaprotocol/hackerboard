@@ -1,0 +1,545 @@
+:root {
+    --background: #1C1C1C;
+    --sidebar-bg: #242424;
+    --card-background: #2A2A2A;
+    --text-primary: #FFFFFF;
+    --text-secondary: #A1A1A1;
+    --accent-color: #3B3B3B;
+    --hover-color: #333333;
+    --border-color: #3B3B3B;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--background);
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: var(--sidebar-bg);
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.logo svg {
+    width: 32px;
+    height: 32px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.nav-item:hover {
+    background-color: var(--accent-color);
+    border-radius: 5px;
+}
+
+.nav-item.active {
+    background-color: #2D4F93;
+    color: var(--text-primary);
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 40px;
+    width: calc(100% - 250px);
+    max-width: 1200px;
+    margin-right: auto;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: var(--card-background);
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.card h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+a {
+    color: #4D7FFF;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #6B93FF;
+}
+
+ul,
+ol {
+    padding-left: 0;
+    list-style-position: inside;
+    text-align: center;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    text-align: center;
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+#search {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+input,
+select {
+    padding: 8px 12px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--text-secondary);
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#status-filter {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.tab {
+    padding: 8px 16px;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tab:hover {
+    background: var(--hover-color);
+}
+
+.tab.active {
+    background: var(--accent-color);
+    color: var(--text-primary);
+    border-color: var(--accent-color);
+}
+
+.external-link::after {
+    content: '↗';
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 0.8em;
+}
+
+select {
+    appearance: none;
+    padding-right: 30px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23A1A1A1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+}
+
+.submit-section {
+    margin-top: 2rem;
+}
+
+.submit-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    /* Blue */
+    color: var(--text-primary);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.submit-button:hover {
+    background-color: #3399FF;
+    /* Light blue on hover */
+}
+
+.submit-button:active {
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+width: 100%;
+height: auto;
+position: static;
+}
+
+.main-content {
+    margin-left: 0;
+    width: 100%;
+}
+
+.filters {
+    flex-direction: column;
+}
+
+.tabs {
+    flex-wrap: wrap;
+}
+}
+
+.onboarding-form {
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-background);
+    color: var(--text-primary);
+    text-align: left;
+}
+
+.choices__inner {
+    background-color: var(--card-background);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    width: 100%;
+    text-align: left;
+}
+
+.choices__input {
+    background-color: transparent;
+    color: var(--text-primary);
+}
+
+.choices__list--dropdown {
+    background-color: var(--card-background);
+    border-color: var(--border-color);
+}
+
+.choices__list--dropdown .choices__item {
+    color: var(--text-primary);
+}
+
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+    background-color: var(--accent-color);
+}
+
+.choices__list--dropdown .choices__item--disabled {
+    color: var(--text-secondary);
+}
+
+.choices[data-type*='select-multiple'] .choices__inner {
+    padding-right: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%23FFFFFF'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px;
+}
+
+.choices__list--dropdown .choices__item {
+    padding: 8px 10px;
+}
+
+/* Choices.js customization for dark mode with hover fix */
+.choices__inner {
+    background-color: var(--card-background);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.choices__input,
+.choices__list--dropdown .choices__item {
+    background-color: var(--card-background);
+    color: var(--text-primary);
+}
+
+.choices__list--dropdown {
+    background-color: var(--card-background);
+    border-color: var(--border-color);
+}
+
+.choices__list--dropdown .choices__item--selectable:hover {
+    background-color: var(--hover-color);
+    color: var(--text-primary);
+}
+
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+}
+
+.choices__list--dropdown .choices__item--disabled {
+    color: var(--text-secondary);
+}
+
+/* Fix for white background in dropdowns */
+.choices__list--dropdown,
+.choices__list[aria-expanded] {
+    background-color: var(--card-background);
+    border-color: var(--border-color);
+}
+
+.choices__list--dropdown .choices__item,
+.choices__list[aria-expanded] .choices__item {
+    color: var(--text-primary);
+}
+
+.choices__list--dropdown .choices__item--choice,
+.choices__list[aria-expanded] .choices__item--choice {
+    background-color: var(--card-background);
+}
+
+/* Fix for input text color */
+.choices__input {
+    background-color: var(--card-background) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Fix for selected items background */
+.choices__list--multiple .choices__item {
+    background-color: var(--accent-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+/* Fix for hover states */
+.choices__list--dropdown .choices__item--selectable:hover,
+.choices__list[aria-expanded] .choices__item--selectable:hover {
+    background-color: var(--hover-color);
+    color: var(--text-primary) !important;
+}
+
+.choices__list--dropdown .choices__item--choice {
+    color: var(--text-primary) !important;
+}
+
+.choices__list--dropdown .choices__item--choice:hover {
+    background-color: var(--hover-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.choices__list--dropdown .choices__item {
+    background-color: var(--card-background) !important;
+}
+
+/* Add these new styles */
+.header-center {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.alert {
+    background-color: rgba(255, 223, 0, 0.1);
+    border-left: 4px solid #02781d;
+    padding: 10px 15px;
+    margin-bottom: 1rem;
+    color: #FFE000;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    text-align: center;
+}
+
+.alert::before {
+    content: "⚠️";
+}
+
+/* Add these new styles for the launchpad */
+.launchpad-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 0;
+}
+
+.launchpad-item {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.launchpad-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.launchpad-number {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    background: var(--accent-color);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border: 2px solid var(--border-color);
+}
+
+.launchpad-title {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #4D7FFF;
+}
+
+.launchpad-description {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+.launchpad-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+/* Add this new style for the container */
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Update these styles */
+.onboarding-form {
+    margin: 0;
+    min-width: 400px;
+}
+
+.grid {
+    margin: 0;
+}
+
+/* Add media query for responsiveness */
+@media (max-width: 1200px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .onboarding-form {
+        min-width: unset;
+    }
+}
