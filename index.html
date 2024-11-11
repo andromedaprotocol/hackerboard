@@ -294,6 +294,7 @@
                     <div class="form-group">
                         <label for="goals">Goals:</label>
                         <select id="goals" name="goals" required>
+                            <option value="~ None">~ None</option>
                             <option value="Learn">Learn</option>
                             <option value="Build">Build</option>
                             <option value="Contribute">Contribute</option>
@@ -303,7 +304,7 @@
                     <div class="form-group">
                         <label for="experience">Experience Level:</label>
                         <select id="experience" name="experience" required>
-                            <option value="None">None</option>
+                            <option value="None">~ None</option>
                             <option value="Beginner (0-1 years)">Beginner (0-1 years)</option>
                             <option value="Intermediate (1-3 years)">Intermediate (1-3 years)</option>
                             <option value="Advanced (3+ years)">Advanced (3+ years)</option>
@@ -321,6 +322,7 @@
                     <div class="form-group">
                         <label for="education">Education:</label>
                         <select id="education" name="education" required>
+                            <option value="None">~ None</option>
                             <option value="Self-taught">Self-taught</option>
                             <option value="Bootcamp">Bootcamp</option>
                             <option value="Undergraduate">Undergraduate</option>
@@ -331,6 +333,7 @@
                     <div class="form-group">
                         <label for="availability">Availability:</label>
                         <select id="availability" name="availability" required>
+                            <option value="None">~ None</option>
                             <option value="Part-time">Part-time</option>
                             <option value="Full-time">Full-time</option>
                             <option value="Prefer-not-to-say">Prefer not to say</option>
@@ -464,50 +467,128 @@
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Choices.js for multi-select dropdowns
+            // Add loading spinner CSS
+            const style = document.createElement('style');
+            style.textContent = `
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .success-message {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+        .success-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .next-steps {
+            background: #2c2c2c;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+    `;
+            document.head.appendChild(style);
+
+            // Initialize Choices.js
             const multipleSelects = document.querySelectorAll('select[multiple]');
             multipleSelects.forEach(select => new Choices(select, { removeItemButton: true }));
 
             // Form submission handler
-            document.getElementById("onboardingForm").addEventListener("submit", function (e) {
-                e.preventDefault(); // Prevent the default form submission
+            document.getElementById("onboardingForm").addEventListener("submit", async function (e) {
+                e.preventDefault();
 
-                // Gather form data
-                const data = {
-                    name: document.getElementById("name").value,
-                    email: document.getElementById("email").value,
-                    github: document.getElementById("github").value,
-                    telegram: document.getElementById("telegram").value,
-                    x: document.getElementById("x").value,
-                    location: document.getElementById("location").value,
-                    frontendSkills: Array.from(document.getElementById("frontendSkills").selectedOptions).map(option => option.value),
-                    languages: Array.from(document.getElementById("languages").selectedOptions).map(option => option.value),
-                    tools: Array.from(document.getElementById("tools").selectedOptions).map(option => option.value),
-                    blockchainExperience: Array.from(document.getElementById("blockchainExperience").selectedOptions).map(option => option.value),
-                    goals: document.getElementById("goals").value,
-                    experience: document.getElementById("experience").value,
-                    hackathonExperience: document.getElementById("hackathonExperience").value,
-                    education: document.getElementById("education").value,
-                    availability: document.getElementById("availability").value,
-                    portfolio: document.getElementById("portfolio").value,
-                    additionalSkills: document.getElementById("additionalSkills").value,
-                };
+                // Show loading state
+                const submitButton = document.querySelector('button[type="submit"]');
+                const originalButtonText = submitButton.innerHTML;
+                submitButton.innerHTML = '<span class="loading-spinner"></span>Submitting...';
+                submitButton.disabled = true;
 
+                try {
+                    const data = {
+                        name: document.getElementById("name").value.trim(),
+                        email: document.getElementById("email").value.trim(),
+                        github: document.getElementById("github").value.trim(),
+                        telegram: document.getElementById("telegram").value.trim(),
+                        x: document.getElementById("x").value.trim(),
+                        location: document.getElementById("location").value.trim(),
+                        frontendSkills: Array.from(document.getElementById("frontendSkills").selectedOptions).map(option => option.value),
+                        languages: Array.from(document.getElementById("languages").selectedOptions).map(option => option.value),
+                        tools: Array.from(document.getElementById("tools").selectedOptions).map(option => option.value),
+                        blockchainExperience: Array.from(document.getElementById("blockchainExperience").selectedOptions).map(option => option.value),
+                        goals: document.getElementById("goals").value,
+                        experience: document.getElementById("experience").value,
+                        hackathonExperience: document.getElementById("hackathonExperience").value,
+                        education: document.getElementById("education").value,
+                        availability: document.getElementById("availability").value,
+                        portfolio: document.getElementById("portfolio").value.trim(),
+                        additionalSkills: document.getElementById("additionalSkills").value.trim(),
+                        submissionDate: new Date().toISOString()
+                    };
 
-                console.log("Form Data:", data);  // Log data for debugging
+                    await fetch("https://script.google.com/macros/s/AKfycbyRWGtJ86aoyGdzR7EuubwibnoFFaQr4K36x7mdPVR5t3_HcOoMEnHP7QrFBf7DmlLI/exec", {
+                        method: "POST",
+                        mode: "no-cors",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    });
 
-                // Send data to Google Apps Script
-                fetch("https://script.google.com/macros/s/AKfycbwMVFotGSOE4rIbU9igGIIbb0Z9efHPP6Vs-GoArqWJ3_oDTM9Y1ellxN5nh339oAs0/exec", {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
-                })
-                    .then(() => {
-                        alert("Thank you! Your submission has been received.");
-                        document.getElementById("onboardingForm").reset();
-                    })
-                    .catch(error => console.error("Error:", error));
+                    // Show success message
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'success-message';
+                    successMessage.innerHTML = `
+                <h3>🎉 Welcome to Andromeda!</h3>
+                <p>Your developer application has been successfully submitted.</p>
+                <div class="next-steps">
+                    <h4>🚀 Next Steps:</h4>
+                    <ol>
+                        <li>Join our <a href="https://t.me/andromedaprotocol" target="_blank">Telegram group</a></li>
+                        <li>Introduce yourself to the community</li>
+                        <li>Check your email (${data.email}) for welcome instructions</li>
+                        <li>Start exploring the <a href="https://docs.andromedaprotocol.io" target="_blank">documentation</a></li>
+                    </ol>
+                </div>
+            `;
+
+                    // Insert success message and animate it
+                    const form = document.getElementById("onboardingForm");
+                    form.parentNode.insertBefore(successMessage, form);
+                    setTimeout(() => successMessage.classList.add('show'), 100);
+
+                    // Reset form
+                    form.reset();
+                    multipleSelects.forEach(select => {
+                        const choices = select.choices;
+                        if (choices) choices.removeActiveItems();
+                    });
+
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("There was an error submitting the form. Please try again.");
+                } finally {
+                    // Reset button state
+                    submitButton.innerHTML = originalButtonText;
+                    submitButton.disabled = false;
+                }
             });
         });
     </script>
