@@ -654,21 +654,12 @@ select {
 .mobile-logo {
     display: none;
     text-align: center;
-    margin: 0 auto;
-    padding: 20px 0 10px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: var(--background);
-    z-index: 999;
+    margin-bottom: 1rem;
 }
 
 .mobile-logo img {
     width: 48px;
     height: 48px;
-    display: block;
-    margin: 0 auto;
 }
 
 /* Update mobile styles */
@@ -678,29 +669,17 @@ select {
     }
 
     .sidebar-toggle {
-        top: 25px;
-        left: 15px;
-        position: fixed;
-        z-index: 1001;
+        top: 20px;
+        left: 20px;
     }
 
     body {
-        padding-top: 88px;
-        /* Height of logo (48px) + padding (40px) */
-    }
-
-    .main-content {
-        margin-left: 0;
-        width: 100%;
-        padding: 0 20px 20px;
+        padding-top: 20px;
+        /* Reduced from 60px */
     }
 
     .header-center {
-        padding-top: 20px;
-    }
-
-    /* Ensure sidebar appears above logo when open */
-    .sidebar {
-        z-index: 1002;
+        margin-top: 40px;
+        /* Add space between toggle and header */
     }
 }
