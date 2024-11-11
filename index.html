@@ -19,6 +19,13 @@
 </head>
 
 <body>
+    <!-- Add a button to toggle sidebar -->
+    <button id="sidebarToggle" class="sidebar-toggle">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M3 12h18M3 6h18M3 18h18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </button>
+
     <div class="sidebar">
         <div class="logo">
             <img src="https://avatars.githubusercontent.com/u/86694044?s=200&v=4" width="32" height="32"
@@ -825,6 +832,32 @@
                 } finally {
                     submitButton.innerHTML = originalButtonText;
                     submitButton.disabled = false;
+                }
+            });
+        });
+
+        // Add sidebar toggle functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+
+            function toggleSidebar() {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+
+            sidebarToggle.addEventListener('click', toggleSidebar);
+
+            // Auto-collapse on mobile
+            if (window.innerWidth <= 768) {
+                toggleSidebar();
+            }
+
+            // Handle window resize
+            window.addEventListener('resize', function () {
+                if (window.innerWidth <= 768 && !sidebar.classList.contains('collapsed')) {
+                    toggleSidebar();
                 }
             });
         });
