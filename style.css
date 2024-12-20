@@ -683,3 +683,38 @@ select {
         /* Add space between toggle and header */
     }
 }
+
+/* Add these styles to fix search input appearance */
+.choices__input {
+    background-color: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 4px 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    color: var(--text-primary) !important;
+}
+
+.choices__input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.choices__input::placeholder {
+    color: var(--text-secondary) !important;
+    opacity: 0.7;
+}
+
+/* Style the search results */
+.choices__list--dropdown .choices__list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Improve dropdown appearance */
+.choices[data-type*='select-multiple'] .choices__input--cloned,
+.choices[data-type*='select-one'] .choices__input--cloned {
+    padding: 6px 8px !important;
+    font-size: 14px;
+}
