@@ -406,6 +406,7 @@
                         <span class="validation-icon success-icon">✓</span>
                         <span class="validation-icon error-icon">!</span>
                     </div>
+
                     <div class="form-group">
                         <label for="aiExperience">Specific AI Experience:</label>
                         <select id="aiExperience" name="aiExperience" multiple>
@@ -572,12 +573,12 @@
                             <a href="https://docs.andromedaprotocol.io/guides/guides-and-examples/embeddables/nft-auction"
                                 class="launchpad-link external-link" target="_blank">Try Embeddables Guide</a>
                         </li>
-                        <li class="launchpad-item"></li>
-                        <div class="launchpad-number">6</div>
-                        <h4 class="launchpad-title">Share Your Success</h4>
-                        <p class="launchpad-description">Showcase your achievements and get recognition from the
-                            community.</p>
-                        <span class="launchpad-link">Post in Main Telegram Channel</span>
+                        <li class="launchpad-item">
+                            <div class="launchpad-number">6</div>
+                            <h4 class="launchpad-title">Share Your Success</h4>
+                            <p class="launchpad-description">Showcase your achievements and get recognition from the
+                                community.</p>
+                            <span class="launchpad-link">Post in Main Telegram Channel</span>
                         </li>
                         <li class="launchpad-item">
                             <div class="launchpad-number">7</div>
@@ -1018,7 +1019,7 @@
                         availability: document.getElementById("availability").value,
                         portfolio: document.getElementById("portfolio").value.trim(),
                         additionalSkills: document.getElementById("additionalSkills").value.trim(),
-                        aiExperience: Array.from(document.getElementById("aiExperience").selectedOptions).map(option => option.value), // Now an array
+                        aiExperience: Array.from(document.getElementById("aiExperience").selectedOptions).map(option => option.value),
                         relevantProjects: document.getElementById("relevantProjects").value.trim(),
                         submissionDate: new Date().toISOString()
                     };
