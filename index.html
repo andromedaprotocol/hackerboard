@@ -7,14 +7,8 @@
     <title>Andromeda Developer Board</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <link rel="stylesheet" href="style.css" />
-    <style>
-        .launchpad-number {
-            font-size: 24px;
-            color: #FFD700;
-            font-weight: bold;
-        }
-    </style>
 </head>
+<!-- Begin left hand side bar -->
 
 <body>
     <button id="sidebarToggle" class="sidebar-toggle">
@@ -124,20 +118,21 @@
 
         </nav>
     </div>
+    <!-- end left hand side bar. -->
 
     <div class="main-content">
         <div class="mobile-logo">
             <img src="https://avatars.githubusercontent.com/u/86694044?s=200&v=4" alt="Andromeda Logo">
         </div>
         <div class="header-center">
-            <h1>Andromeda Developer Portal</h1>
-            <p class="subtitle">Get started with ready-made apps and templates or develop from scratch.</p>
+            <h1>OpenSource Onboarding Platform</h1>
+            <p class="subtitle">Begin Your Journey With Andromeda Here.</p>
         </div>
         <!-- Begin form -->
 
         <div class="content-grid">
             <div class="card onboarding-form">
-                <div class="alert" style="color: yellow;">DO THIS FIRST</div>
+                <div class="alert alert-yellow">DO THIS FIRST</div>
                 <h2>Andromeda Developer Onboarding</h2>
                 <form id="onboardingForm">
                     <div class="form-group">
@@ -429,15 +424,14 @@
                                 <path d="M2 17l10 5 10-5" stroke-width="2" />
                                 <path d="M2 12l10 5 10-5" stroke-width="2" />
                             </svg>
-                            <h1 class="header-subtitle" style="color: #FFD700; font-size: smaller;">DO THIS AFTER
-                                ONBOARDING</h1>
+                            <h1 class="header-subtitle header-subtitle-gold">DO THIS AFTER ONBOARDING</h1>
                         </div>
                     </div>
                     <ol class="launchpad-list">
                         <li class="launchpad-item highlighted">
                             <div class="launchpad-number">⭐</div>
-                            <p class="launchpad-description" style="background-color: #404040; color: #E0E0E0;">COMPLETE
-                                ALL OF THE FOLLOWING TASKS TO JOIN THE ANDROMEDA FLIGHT CREW 👽</p>
+                            <p class="launchpad-description launchpad-description-dark">COMPLETE ALL OF THE FOLLOWING
+                                TASKS TO JOIN THE ANDROMEDA FLIGHT CREW 👽</p>
                         </li>
                         <li class="launchpad-item highlighted">
                             <div class="launchpad-number">1</div>
@@ -495,9 +489,7 @@
                                 ecosystem.
                             </p>
                             <a href="https://github.com/andromedaprotocol/ado-database-hackerboard/issues"
-                                class="launchpad-link external-link"
-                                style="padding: 20px 40px; font-size: 1.4rem; background-color: var(--accent-color); color: var(--text-primary); border: none; border-radius: 8px; cursor: pointer; display: inline-block;"
-                                target="_blank">
+                                class="launchpad-link external-link hackerboard-link" target="_blank">
                                 Visit The 🔗🔗 🪓 Hackerboard
                             </a>
 
@@ -513,22 +505,24 @@
         <!-- Begin bottom row of buttons -->
 
         <!-- suggested path box -->
-        <div id="recommendations" style="display:none">
+        <div id="recommendations" class="recommendations-hidden">
             <h3 id="recommendations-title">✨ Recommended Paths ✨</h3>
             <ul id="recommendation-list"></ul>
         </div>
         <!-- end suggested path box -->
 
+        <!-- begins bottom row buttons -->
+
         <div class="submit-section">
-            <h1 style="text-align: center;">Already have ideas? Submit A New ADO or Feature!</h1>
+            <h1 class="text-center">Already have ideas? Submit A New ADO or Feature!</h1>
             <div class="submit-buttons">
                 <a href="https://github.com/andromedaprotocol/hackerboard_tasks/issues" target="_blank"
                     class="submit-button">Hackerboard (Bounties)</a>
                 <a href="https://github.com/andromedaprotocol/ado-database/issues/new/choose" target="_blank"
                     class="submit-button">Submit
-                    ADO Idea [paid if accepted]</a>
+                    ADO Idea [poss. pay]</a>
                 <a href="https://github.com/andromedaprotocol/Contractor_bidding/issues" target="_blank"
-                    class="submit-button">Contractor Bidding</a>
+                    class="submit-button">Contracts for Bid (Solo/Team)</a>
                 <a href="https://zealy.io/cw/andromedacommunity/questboard/ff856265-3649-4b5f-a41f-c19eadfaf2e0/36c50401-4e44-452a-9539-94b9f2451f3d"
                     target="_blank" class="submit-button">Ambassador Program</a>
                 <a href="https://github.com/andromedaprotocol/ai_initiatives/issues" target="_blank"
@@ -961,7 +955,7 @@
                     successMessage.innerHTML = `
                 <h3>🎉 Welcome to Andromeda!</h3>
                 <p>Your developer application has been successfully submitted.</p>
-                <div id="recommendations" style="display:none">
+                <div id="recommendations" class="recommendations-hidden">
                   <h3 id="recommendations-title">✨ Recommended Paths ✨</h3>
                   <ul id="recommendation-list"></ul>
                 </div>
@@ -1086,6 +1080,8 @@
         });
     </script>
     <!-- End script -->
+
+
 
     <!-- Begin chat bot -->
     <script type="module">

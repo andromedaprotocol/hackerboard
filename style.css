@@ -522,6 +522,9 @@ select {
 }
 
 .launchpad-number {
+    font-size: 24px;
+    color: #FFD700;
+    font-weight: bold;
     position: absolute;
     top: -15px;
     left: -15px;
@@ -532,7 +535,6 @@ select {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
     border: 2px solid var(--border-color);
 }
 
@@ -717,4 +719,38 @@ select {
 .choices[data-type*='select-one'] .choices__input--cloned {
     padding: 6px 8px !important;
     font-size: 14px;
+}
+
+/* Additional styles moved from index.html */
+.alert-yellow {
+    color: yellow;
+}
+
+.header-subtitle-gold {
+    color: #FFD700;
+    font-size: smaller;
+}
+
+.launchpad-description-dark {
+    background-color: #404040;
+    color: #E0E0E0;
+}
+
+.hackerboard-link {
+    padding: 20px 40px;
+    font-size: 1.4rem;
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.recommendations-hidden {
+    display: none;
+}
+
+.text-center {
+    text-align: center;
 }
