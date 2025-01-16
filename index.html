@@ -418,25 +418,44 @@
                         submissionDate: new Date().toISOString()
                     };
 
-                    const response = await fetch("https://script.google.com/macros/s/AKfycbyRWGtJ86aoyGdzR7EuubwibnoFFaQr4K36x7mdPVR5t3_HcOoMEnHP7QrFBf7DmlLI/exec", {
-                        method: "POST",
-                        mode: "cors",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json"
-                        },
-                        body: JSON.stringify(data)
+                    // Create a promise to handle JSONP
+                    const jsonpPromise = new Promise((resolve, reject) => {
+                        // Create a unique callback name
+                        const callbackName = 'jsonpCallback_' + Date.now();
+
+                        // Create script element
+                        const script = document.createElement('script');
+                        const baseUrl = "https://script.google.com/macros/s/AKfycbyRWGtJ86aoyGdzR7EuubwibnoFFaQr4K36x7mdPVR5t3_HcOoMEnHP7QrFBf7DmlLI/exec";
+                        script.src = `${baseUrl}?callback=${callbackName}&data=${encodeURIComponent(JSON.stringify(data))}`;
+
+                        // Define the callback function
+                        window[callbackName] = function (response) {
+                            // Clean up
+                            delete window[callbackName];
+                            document.body.removeChild(script);
+
+                            if (response.result === "success") {
+                                resolve(response);
+                            } else {
+                                reject(new Error(response.message || 'Submission failed'));
+                            }
+                        };
+
+                        // Handle script load error
+                        script.onerror = () => {
+                            delete window[callbackName];
+                            document.body.removeChild(script);
+                            reject(new Error('Failed to load the script'));
+                        };
+
+                        // Add script to document
+                        document.body.appendChild(script);
                     });
 
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-
+                    const result = await jsonpPromise;
 
                     if (result.result === 'success') {
-                        displayRecommendations(result.recommendations); // Display recommendations
+                        displayRecommendations(result.recommendations);
                         // Display success message and recommendations
                         const successMessage = document.createElement('div');
                         successMessage.className = 'success-message';
