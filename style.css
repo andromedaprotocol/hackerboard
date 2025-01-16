@@ -161,6 +161,10 @@ h2 {
     padding: 20px;
     border: 1px solid var(--border-color);
     text-align: center;
+    display: flex;
+    /* Use flexbox to control layout */
+    flex-direction: column;
+    /* Align children vertically */
 }
 
 .card h3 {
@@ -323,9 +327,25 @@ select {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
 }
 
+#onboarding-form-container {
+    display: flex;
+    /* Use flexbox to control layout */
+    flex-direction: column;
+    /* Align children vertically */
+    /* other styles can be added here */
+}
+
 .onboarding-form {
-    max-width: 800px;
-    margin: 0 auto 2rem auto;
+    /* max-width: 800px; This will also control size and should be removed */
+    margin: 0;
+    /* Remove automatic margins, */
+    width: 100%;
+    /* Make it take full width of the container */
+    min-width: 400px;
+    /* Set a minimum width for the form */
+    max-width: 100%;
+    display: flex;
+    flex: 1;
 }
 
 .form-group {
@@ -562,13 +582,24 @@ select {
     grid-template-columns: 2fr 1fr;
     gap: 2rem;
     margin-bottom: 2rem;
+
 }
 
 /* Update these styles */
 .onboarding-form {
-    margin: 0;
-    min-width: 400px;
+    /* max-width: 800px; This will also control size and should be removed */
+
+    /* Remove automatic margins, */
+    width: 100%;
+    /* Make it take full width of the container */
+    min-width: 750px;
+    /* Set a minimum width for the form */
+    max-width: 100%;
+    display: flex;
+    flex: 1;
+
 }
+
 
 .grid {
     margin: 0;
@@ -752,5 +783,156 @@ select {
 }
 
 .text-center {
+    text-align: center;
+}
+
+
+/* MOVED JS  CSS styles from index.html  */
+.form-group.error input,
+.form-group.error select {
+    border-color: #8b3a3a;
+    background-color: rgba(139, 58, 58, 0.05);
+}
+
+.error-message {
+    color: #c17878;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.form-group.error .error-message {
+    display: block;
+}
+
+.form-group.success input,
+.form-group.success select {
+    border-color: #3a8b3a;
+    background-color: rgba(58, 139, 58, 0.05);
+}
+
+.validation-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-group.error .error-icon {
+    display: block;
+    color: #8b3a3a;
+}
+
+.form-group.success .success-icon {
+    display: block;
+    color: #3a8b3a;
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 3px solid #2c2c2c;
+    border-top: 3px solid #4a4a4a;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.success-message {
+    background-color: rgba(58, 139, 58, 0.1);
+    color: #d0d0d0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(58, 139, 58, 0.2);
+    text-align: center;
+}
+
+.success-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.next-steps {
+    background: #2c2c2c;
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin-top: 10px;
+    border: 1px solid #3c3c3c;
+}
+
+/* Style the recommendations title */
+#recommendations-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: #FFD700;
+}
+
+/* Add emojis to the title (optional) */
+#recommendations-title:before {
+    content: "✨ ";
+}
+
+#recommendations-title:after {
+    content: " ✨";
+}
+
+/* Style the recommendation list items */
+#recommendation-list li {
+    text-align: center;
+    font-size: 1.4rem;
+    color: #4D7FFF;
+    margin-bottom: 0.8rem;
+    list-style: none;
+}
+
+/* Add an icon to list items (optional) */
+#recommendation-list li:before {
+    content: "➡️ ";
+    margin-right: 0.5rem;
+}
+
+/* Style for recommendation items */
+#recommendation-list li {
+    background-color: rgba(77, 127, 255, 0.1);
+    border: 1px solid #4D7FFF;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #4D7FFF;
+    list-style: none;
+}
+
+#recommendation-list li:before {
+    content: '⭐ ';
+    margin-right: 8px;
+}
+
+#recommendations {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     text-align: center;
 }
