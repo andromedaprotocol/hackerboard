@@ -1,0 +1,284 @@
+<!-- Begin form -->
+
+<div class="content-grid">
+    <div class="card onboarding-form">
+        <div class="alert alert-yellow">DO THIS FIRST</div>
+        <h2>Andromeda Developer Onboarding</h2>
+        <form id="onboardingForm">
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+            <div class="form-group">
+                <label for="github">GitHub Profile (https://):</label>
+                <input type="url" id="github" name="github" required>
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+            <div class="form-group">
+                <label for="telegram">Telegram Username:</label>
+                <input type="text" id="telegram" name="telegram" placeholder="@username" required>
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+            <div class="form-group">
+                <label for="x">X/Twitter Username:</label>
+                <input type="text" id="x" name="x" placeholder="@username">
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" placeholder="Enter your location" required>
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+
+            <div class="form-group">
+                <label for="spokenLanguages">Spoken Languages:</label>
+                <select id="spokenLanguages" name="spokenLanguages" multiple>
+                    <option value="None">~ None</option>
+                    <option value="English">English</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="French">French</option>
+                    <option value="German">German</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="Arabic">Arabic</option>
+                    <option value="Hindi">Hindi</option>
+                    <option value="Portuguese">Portuguese</option>
+                    <option value="Russian">Russian</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Korean">Korean</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+
+            <div class="form-group">
+                <label for="frontendSkills">Front-End Skills:</label>
+                <select id="frontendSkills" name="frontendSkills" multiple>
+                    <option value="None">~ None</option>
+                    <option value="Angular">Angular</option>
+                    <option value="Bootstrap">Bootstrap</option>
+                    <option value="ChakraUI">ChakraUI</option>
+                    <option value="ShadCN">ShadCN</option>
+                    <option value="CSS-in-JS">CSS-in-JS</option>
+                    <option value="GraphQL">GraphQL</option>
+                    <option value="HTML/CSS">HTML/CSS</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="jQuery">jQuery</option>
+                    <option value="Next.js">Next.js</option>
+                    <option value="Nuxt.js">Nuxt.js</option>
+                    <option value="React">React</option>
+                    <option value="Redux">Redux</option>
+                    <option value="Storybook">Storybook</option>
+                    <option value="Tailwind CSS">Tailwind CSS</option>
+                    <option value="TypeScript">TypeScript</option>
+                    <option value="Vue.js">Vue.js</option>
+                    <option value="Web3.js">Web3.js</option>
+                    <option value="Ethers.js">Ethers.js</option>
+                    <option value="UI/UX Design">UI/UX Design</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+
+            <div class="form-group">
+                <label for="languages">Programming Languages:</label>
+                <select id="languages" name="languages" multiple>
+                    <option value="None">~ None</option>
+                    <option value="C#">C#</option>
+                    <option value="C++">C++</option>
+                    <option value="Go">Go</option>
+                    <option value="Haskell">Haskell</option>
+                    <option value="Java">Java</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Python">Python</option>
+                    <option value="Rust">Rust</option>
+                    <option value="Solidity">Solidity</option>
+                    <option value="SQL">SQL</option>
+                    <option value="TypeScript">TypeScript</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+
+            <div class="form-group">
+                <label for="tools">Andromeda Tool Familiarity:</label>
+                <select id="tools" name="tools" multiple>
+                    <option value="None">~ None</option>
+                    <option value="Andromeda CLI">Andromeda CLI</option>
+                    <option value="ADO Builder">ADO Builder</option>
+                    <option value="App Builder">App Builder</option>
+                    <option value="Andromeda Web App">Andromeda Web App</option>
+                    <option value="Andromeda Logic Library (ALL)">Andromeda Logic Library (ALL)</option>
+                    <option value="Andromeda Development Experience">Andromeda Development Experience</option>
+                    <option value="Cosmos SDK">Cosmos SDK</option>
+                    <option value="CosmWasm">CosmWasm</option>
+                    <option value="GraphQL">GraphQL</option>
+                    <option value="Keplr Wallet">Keplr Wallet</option>
+                    <option value="Git">Git</option>
+                    <option value="GitHub">GitHub</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+
+            <div class="form-group">
+                <label for="blockchainExperience">Blockchain Experience:</label>
+                <select id="blockchainExperience" name="blockchainExperience" multiple>
+                    <option value="None">~ None</option>
+                    <option value="Andromeda">Andromeda</option>
+                    <option value="Archway">Archway</option>
+                    <option value="Avalanche">Avalanche</option>
+                    <option value="BNB Chain">BNB Chain</option>
+                    <option value="Bitcoin">Bitcoin</option>
+                    <option value="Cardano">Cardano</option>
+                    <option value="Coreum">Coreum</option>
+                    <option value="Cosmos SDK">Cosmos SDK</option>
+                    <option value="CosmWasm">CosmWasm</option>
+                    <option value="Ethereum">Ethereum</option>
+                    <option value="IBC (Inter-Blockchain Communication)">IBC</option>
+                    <option value="Injective">Injective</option>
+                    <option value="Juno">Juno</option>
+                    <option value="Neutron">Neutron</option>
+                    <option value="OmniFlix">OmniFlix</option>
+                    <option value="Polkadot">Polkadot</option>
+                    <option value="Polygon">Polygon</option>
+                    <option value="Solana">Solana</option>
+                    <option value="Stargaze">Stargaze</option>
+                    <option value="Tezos">Tezos</option>
+                    <option value="Smart Contract Auditing">Smart Contract Auditing</option>
+                    <option value="DeFi Protocols">DeFi Protocols</option>
+                    <option value="NFT Development">NFT Development</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+
+            <div class="form-group">
+                <label for="aiExperience">Specific AI Experience:</label>
+                <select id="aiExperience" name="aiExperience" multiple>
+                    <option value="">Select relevant AI skills/tools</option>
+                    <option value="Scikit-learn">Scikit-learn</option>
+                    <option value="TensorFlow">TensorFlow</option>
+                    <option value="PyTorch">PyTorch</option>
+                    <option value="Keras">Keras</option>
+                    <option value="OpenCV">OpenCV</option>
+                    <option value="ChatGPT">ChatGPT</option>
+                    <option value="OpenAI API">OpenAI API</option>
+                    <option value="Claude API">Claude API</option>
+                    <option value="Google Gemini API">Google Gemini API</option>
+                    <option value="LangFlow">LangFlow</option>
+                    <option value="Transformer models">Transformer models</option>
+                    <option value="Reinforcement learning">Reinforcement learning</option>
+                    <option value="Generative AI">Generative AI</option>
+                    <option value="Federated learning">Federated learning</option>
+                    <option value="Explainable AI">Explainable AI</option>
+                    <option value="Other">Other (specify in Additional Skills)</option>
+                </select>
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+
+            <div class="form-group">
+                <label for="goals">Goals:</label>
+                <select id="goals" name="goals" required>
+                    <option value="~ None">~ None</option>
+                    <option value="Learn">Learn</option>
+                    <option value="Build">Build</option>
+                    <option value="Contribute">Contribute</option>
+                    <option value="Mentor">Mentor</option>
+                    <option value="Collaborate">Collaborate</option>
+                    <option value="Find a Team">Find a Team</option>
+                    <option value="Earn Rewards">Earn Rewards</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="experience">Experience Level:</label>
+                <select id="experience" name="experience" required>
+                    <option value="None">~ None</option>
+                    <option value="Beginner (0-1 years)">Beginner (0-1 years)</option>
+                    <option value="Intermediate (1-3 years)">Intermediate (1-3 years)</option>
+                    <option value="Advanced (3+ years)">Advanced (3+ years)</option>
+                    <option value="Expert (5+ years)">Expert (5+ years, with significant contributions to
+                        blockchain projects)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hackathonExperience">Hackathon Experience:</label>
+                <select id="hackathonExperience" name="hackathonExperience" required>
+                    <option value="None">~ None</option>
+                    <option value="Some">Some</option>
+                    <option value="Experienced">Experienced</option>
+                    <option value="Frequently Participate">Frequently Participate</option>
+                    <option value="Have Won Awards">Have Won Awards</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="education">Education:</label>
+                <select id="education" name="education" required>
+                    <option value="None">~ None</option>
+                    <option value="Self-taught">Self-taught</option>
+                    <option value="Bootcamp">Bootcamp</option>
+                    <option value="Undergraduate">Undergraduate</option>
+                    <option value="Graduate">Graduate</option>
+                    <option value="Prefer-not-to-say">Prefer not to say</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="availability">Availability:</label>
+                <select id="availability" name="availability" required>
+                    <option value="None">~ None</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Prefer-not-to-say">Prefer not to say</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="portfolio">Portfolio (https://):</label>
+                <input type="url" id="portfolio" name="portfolio">
+                <div class="error-message"></div>
+                <span class="validation-icon success-icon">✓</span>
+                <span class="validation-icon error-icon">!</span>
+            </div>
+            <div class="form-group">
+                <label for="additionalSkills">Additional Skills or Notes:</label>
+                <input type="text" id="additionalSkills" name="additionalSkills">
+            </div>
+            <div class="form-group">
+                <label for="relevantProjects">Relevant AI Projects:</label>
+                <input type="text" id="relevantProjects" name="relevantProjects" placeholder="Provide links...">
+            </div>
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+    </div>
+
+    <!-- End form -->
+    <!-- right sidebar will go here on index.html -->
