@@ -303,8 +303,8 @@
                     .then(response => response.text())
                     .then(html => {
                         document.getElementById('onboarding-form-container').innerHTML = html;
-                        // Re-initialize Choices.js and attach event listeners after the form is loaded
                         initializeFormInteractions();
+                        detectUserLocation();
                     })
                     .catch(error => {
                         console.error('Error loading the form:', error);
@@ -334,6 +334,9 @@
                 // Handle GitHub URL formatting
                 const githubInput = document.querySelector('#onboardingForm #github');
                 if (githubInput) {
+                    githubInput.addEventListener('input', function () {
+                        formatGithubUrl(this);
+                    });
                     githubInput.addEventListener('blur', function () {
                         formatGithubUrl(this);
                     });
@@ -399,17 +402,14 @@
                         submissionDate: new Date().toISOString()
                     };
 
-                    // Create a promise to handle JSONP
+                    console.log('Form data being sent:', data); // Add debugging
+
+                    // Modify the JSONP implementation for better debugging
                     const jsonpPromise = new Promise((resolve, reject) => {
                         const callbackName = 'jsonpCallback_' + Date.now();
-                        const script = document.createElement('script');
-                        const baseUrl = "https://script.google.com/macros/s/AKfycbxAjunFJsfxBVlVHevOWEjKna7tL0aRn7kq_hUjuaQs-sLqLJ2SHuNuWPJhfyRJYqs/exec";
-
-                        // Define the callback function before creating the script
                         window[callbackName] = function (response) {
+                            console.log('JSONP response received:', response); // Add debugging
                             delete window[callbackName];
-                            if (script.parentNode) script.parentNode.removeChild(script);
-
                             if (response && response.result === "success") {
                                 resolve(response);
                             } else {
@@ -417,22 +417,21 @@
                             }
                         };
 
-                        // Handle script load error
-                        script.onerror = () => {
-                            delete window[callbackName];
-                            if (script.parentNode) script.parentNode.removeChild(script);
+                        const script = document.createElement('script');
+                        const baseUrl = "https://script.google.com/macros/s/AKfycbxAjunFJsfxBVlVHevOWEjKna7tL0aRn7kq_hUjuaQs-sLqLJ2SHuNuWPJhfyRJYqs/exec";
+
+                        // Simplified data passing
+                        const params = new URLSearchParams({
+                            callback: callbackName,
+                            data: JSON.stringify(data)
+                        });
+
+                        script.src = `${baseUrl}?${params}`;
+                        script.onerror = (error) => {
+                            console.error('Script loading error:', error); // Add debugging
                             reject(new Error('Failed to load the script'));
                         };
 
-                        // Encode data manually to ensure proper formatting
-                        const encodedData = encodeURIComponent(JSON.stringify(data))
-                            .replace(/'/g, '%27')
-                            .replace(/"/g, '%22');
-
-                        // Build URL manually to ensure proper encoding
-                        script.src = `${baseUrl}?callback=${callbackName}&data=${encodedData}`;
-
-                        // Add script to document
                         document.body.appendChild(script);
                     });
 
