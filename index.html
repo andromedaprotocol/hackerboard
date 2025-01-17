@@ -405,41 +405,52 @@
                         const script = document.createElement('script');
                         const baseUrl = "https://script.google.com/macros/s/AKfycbxTptJ5FZ1S8uIV3kZLGkGQzkklg26z7YM4eZjAOUQCExotYWSbYAFs7Cec9vIZTT6b/exec";
 
-                        // Add timeout handling
-                        const timeout = setTimeout(() => {
-                            cleanup();
-                            reject(new Error('Request timed out'));
-                        }, 30000); // 30 second timeout
-
-                        function cleanup() {
-                            clearTimeout(timeout);
-                            delete window[callbackName];
-                            if (script.parentNode) {
-                                script.parentNode.removeChild(script);
-                            }
-                        }
-
+                        // Define the callback function first
                         window[callbackName] = function (response) {
-                            cleanup();
-                            if (response.result === "success") {
+                            delete window[callbackName];
+                            if (script.parentNode) script.parentNode.removeChild(script);
+
+                            if (response && response.result === "success") {
                                 resolve(response);
                             } else {
-                                reject(new Error(response.message || 'Submission failed'));
+                                reject(new Error(response?.message || 'Submission failed'));
                             }
                         };
 
+                        // Handle script load error
                         script.onerror = () => {
-                            cleanup();
+                            delete window[callbackName];
+                            if (script.parentNode) script.parentNode.removeChild(script);
                             reject(new Error('Failed to load the script'));
                         };
 
-                        // Encode the data properly
-                        const encodedData = encodeURIComponent(JSON.stringify(data));
-                        script.src = `${baseUrl}?callback=${callbackName}&data=${encodedData}`;
+                        // Split data into smaller chunks if needed
+                        const jsonData = JSON.stringify(data);
+                        const chunkSize = 1500; // URL length limit safety
+                        const chunks = [];
+
+                        for (let i = 0; i < jsonData.length; i += chunkSize) {
+                            chunks.push(jsonData.slice(i, i + chunkSize));
+                        }
+
+                        // Add data as URL parameters
+                        const params = new URLSearchParams({
+                            callback: callbackName,
+                            chunks: chunks.length,
+                            chunk0: chunks[0]
+                        });
+
+                        // Add remaining chunks if any
+                        for (let i = 1; i < chunks.length; i++) {
+                            params.append(`chunk${i}`, chunks[i]);
+                        }
+
+                        script.src = `${baseUrl}?${params.toString()}`;
                         document.body.appendChild(script);
                     });
 
                     const result = await jsonpPromise;
+                    console.log("Submission result:", result);
 
                     if (result.result === 'success') {
                         displayRecommendations(result.recommendations);
@@ -479,7 +490,7 @@
                     }
 
                 } catch (error) {
-                    console.error("Error:", error);
+                    console.error("Submission error:", error);
                     alert("There was an error submitting the form. Please try again.");
                 } finally {
                     submitButton.innerHTML = originalButtonText;
