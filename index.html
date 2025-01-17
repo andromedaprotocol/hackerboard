@@ -405,9 +405,9 @@
                         const script = document.createElement('script');
                         const baseUrl = "https://script.google.com/macros/s/AKfycbxTptJ5FZ1S8uIV3kZLGkGQzkklg26z7YM4eZjAOUQCExotYWSbYAFs7Cec9vIZTT6b/exec";
 
-                        // Define the callback function first
+                        // Define the callback function before creating the script
                         window[callbackName] = function (response) {
-                            delete window[callbackName];
+                            delete window[callbackName]; // Clean up
                             if (script.parentNode) script.parentNode.removeChild(script);
 
                             if (response && response.result === "success") {
@@ -424,33 +424,21 @@
                             reject(new Error('Failed to load the script'));
                         };
 
-                        // Split data into smaller chunks if needed
-                        const jsonData = JSON.stringify(data);
-                        const chunkSize = 1500; // URL length limit safety
-                        const chunks = [];
-
-                        for (let i = 0; i < jsonData.length; i += chunkSize) {
-                            chunks.push(jsonData.slice(i, i + chunkSize));
-                        }
-
-                        // Add data as URL parameters
+                        // Create URL with parameters
                         const params = new URLSearchParams({
                             callback: callbackName,
-                            chunks: chunks.length,
-                            chunk0: chunks[0]
+                            data: JSON.stringify(data)
                         });
 
-                        // Add remaining chunks if any
-                        for (let i = 1; i < chunks.length; i++) {
-                            params.append(`chunk${i}`, chunks[i]);
-                        }
-
+                        // Set script source
                         script.src = `${baseUrl}?${params.toString()}`;
+
+                        // Add script to document
                         document.body.appendChild(script);
                     });
 
                     const result = await jsonpPromise;
-                    console.log("Submission result:", result);
+                    console.log("Form submission result:", result);
 
                     if (result.result === 'success') {
                         displayRecommendations(result.recommendations);
@@ -490,8 +478,8 @@
                     }
 
                 } catch (error) {
-                    console.error("Submission error:", error);
-                    alert("There was an error submitting the form. Please try again.");
+                    console.error("Form submission error:", error);
+                    alert(`There was an error submitting the form: ${error.message}`);
                 } finally {
                     submitButton.innerHTML = originalButtonText;
                     submitButton.disabled = false;
