@@ -305,8 +305,6 @@
                         document.getElementById('onboarding-form-container').innerHTML = html;
                         // Re-initialize Choices.js and attach event listeners after the form is loaded
                         initializeFormInteractions();
-                        initializeRelatedSkills();
-                        detectUserLocation(); // Add location detection to here
                     })
                     .catch(error => {
                         console.error('Error loading the form:', error);
@@ -333,36 +331,19 @@
                     }
                 });
 
+                // Handle GitHub URL formatting
                 const githubInput = document.querySelector('#onboardingForm #github');
                 if (githubInput) {
                     githubInput.addEventListener('blur', function () {
                         formatGithubUrl(this);
                     });
-                    githubInput.addEventListener('focus', function () {
-                        if (this.value === '') {
-                            this.value = 'https://github.com/';
-                        }
-                    });
-                    githubInput.addEventListener('blur', function () {
-                        if (this.value === 'https://github.com/') {
-                            this.value = ''; // Clear if the user didn't add anything
-                        }
-                    });
                 }
 
+                // Handle social media handles
                 const telegramInput = document.querySelector('#onboardingForm #telegram');
-                if (telegramInput) {
-                    telegramInput.addEventListener('blur', function () {
-                        formatSocialHandle(this, '@');
-                    });
-                }
-
                 const xInput = document.querySelector('#onboardingForm #x');
-                if (xInput) {
-                    xInput.addEventListener('blur', function () {
-                        formatSocialHandle(this, '@');
-                    });
-                }
+                if (telegramInput) telegramInput.addEventListener('blur', () => formatSocialHandle(telegramInput, '@'));
+                if (xInput) xInput.addEventListener('blur', () => formatSocialHandle(xInput, '@'));
 
                 // Re-attach the form submission listener
                 const onboardingForm = document.getElementById("onboardingForm");
@@ -420,20 +401,26 @@
 
                     // Create a promise to handle JSONP
                     const jsonpPromise = new Promise((resolve, reject) => {
-                        // Create a unique callback name
                         const callbackName = 'jsonpCallback_' + Date.now();
-
-                        // Create script element
                         const script = document.createElement('script');
                         const baseUrl = "https://script.google.com/macros/s/AKfycbxTptJ5FZ1S8uIV3kZLGkGQzkklg26z7YM4eZjAOUQCExotYWSbYAFs7Cec9vIZTT6b/exec";
-                        script.src = `${baseUrl}?callback=${callbackName}&data=${encodeURIComponent(JSON.stringify(data))}`;
 
-                        // Define the callback function
-                        window[callbackName] = function (response) {
-                            // Clean up
+                        // Add timeout handling
+                        const timeout = setTimeout(() => {
+                            cleanup();
+                            reject(new Error('Request timed out'));
+                        }, 30000); // 30 second timeout
+
+                        function cleanup() {
+                            clearTimeout(timeout);
                             delete window[callbackName];
-                            document.body.removeChild(script);
+                            if (script.parentNode) {
+                                script.parentNode.removeChild(script);
+                            }
+                        }
 
+                        window[callbackName] = function (response) {
+                            cleanup();
                             if (response.result === "success") {
                                 resolve(response);
                             } else {
@@ -441,14 +428,14 @@
                             }
                         };
 
-                        // Handle script load error
                         script.onerror = () => {
-                            delete window[callbackName];
-                            document.body.removeChild(script);
+                            cleanup();
                             reject(new Error('Failed to load the script'));
                         };
 
-                        // Add script to document
+                        // Encode the data properly
+                        const encodedData = encodeURIComponent(JSON.stringify(data));
+                        script.src = `${baseUrl}?callback=${callbackName}&data=${encodedData}`;
                         document.body.appendChild(script);
                     });
 
@@ -548,19 +535,54 @@
                 }
             }
 
-            // Helper function to suggest a skill
-            function suggestSkill(select, skill) {
-                if (!select) return;
-                const choices = Choices.get(select);
-                if (choices && !Array.from(select.selectedOptions).some(option => option.value === skill)) {
-                    const shouldAdd = confirm(`Would you like to add ${skill} to your skills? It's commonly used with your other selections.`);
-                    if (shouldAdd) {
-                        choices.setChoiceByValue(skill);
-                    }
+            // Function to simulate getting recommendations (replace with actual logic if possible)
+            function getRecommendationsFromData(data) {
+                // This is a placeholder. Ideally, you would get these recommendations from your server-side script.
+                console.log("Data for recommendations:", data); // Log the data
+
+                // Example:
+                const recommendations = [];
+                if (data.languages.includes('Rust') || data.languages.includes('JavaScript')) {
+                    recommendations.push({ path: "Hacker Board", match: "Potential Match" });
+                }
+                // Add more logic based on your scoring system
+
+                return recommendations;
+            }
+
+            // Function to display recommendations
+            function displayRecommendations(recommendations) {
+                const recommendationsDiv = document.getElementById("recommendations");
+                const recommendationList = document.getElementById("recommendation-list");
+                recommendationList.innerHTML = ''; // Clear previous recommendations
+
+                if (recommendations && recommendations.length > 0) {
+                    recommendations.forEach(rec => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${rec.path} (${rec.match})`;
+                        recommendationList.appendChild(listItem);
+                    });
+                    recommendationsDiv.style.display = "block";
+                } else {
+                    recommendationsDiv.style.display = "none";
                 }
             }
 
-
+            // Location auto-detection
+            async function detectUserLocation() {
+                try {
+                    const response = await fetch('https://ipapi.co/json/');
+                    const data = await response.json();
+                    const locationInput = document.querySelector('#onboardingForm #location');
+                    if (data.city && data.country_name) {
+                        locationInput.value = `${data.city}, ${data.country_name}`;
+                        const event = new Event('input');
+                        locationInput.dispatchEvent(event);
+                    }
+                } catch (error) {
+                    console.log('Location detection failed:', error);
+                }
+            }
         });
 
         // Add sidebar toggle functionality
@@ -588,84 +610,6 @@
                 }
             });
         });
-        // Function to simulate getting recommendations (replace with actual logic if possible)
-        function getRecommendationsFromData(data) {
-            // This is a placeholder. Ideally, you would get these recommendations from your server-side script.
-            console.log("Data for recommendations:", data); // Log the data
-
-            // Example:
-            const recommendations = [];
-            if (data.languages.includes('Rust') || data.languages.includes('JavaScript')) {
-                recommendations.push({ path: "Hacker Board", match: "Potential Match" });
-            }
-            // Add more logic based on your scoring system
-
-            return recommendations;
-        }
-
-        // Function to display recommendations
-        function displayRecommendations(recommendations) {
-            const recommendationsDiv = document.getElementById("recommendations");
-            const recommendationList = document.getElementById("recommendation-list");
-            recommendationList.innerHTML = ''; // Clear previous recommendations
-
-            if (recommendations && recommendations.length > 0) {
-                recommendations.forEach(rec => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = `${rec.path} (${rec.match})`;
-                    recommendationList.appendChild(listItem);
-                });
-                recommendationsDiv.style.display = "block";
-            } else {
-                recommendationsDiv.style.display = "none";
-            }
-        }
-        // Initialize skills based on other selections
-        function initializeRelatedSkills() {
-            const frontendSelect = document.querySelector('#onboardingForm #frontendSkills');
-            const languagesSelect = document.querySelector('#onboardingForm #languages');
-            const toolsSelect = document.querySelector('#onboardingForm #tools');
-            const blockchainSelect = document.querySelector('#onboardingForm #blockchainExperience');
-
-            blockchainSelect.addEventListener('change', function (e) {
-                const choices = e.target.selectedOptions;
-                const values = Array.from(choices).map(option => option.value);
-
-                if (values.includes('Ethereum')) {
-                    suggestSkill(languagesSelect, 'Solidity');
-                    suggestSkill(toolsSelect, 'MetaMask');
-                }
-
-                if (values.includes('Cosmos SDK') || values.includes('CosmWasm')) {
-                    suggestSkill(toolsSelect, 'Keplr Wallet');
-                }
-            });
-
-            languagesSelect.addEventListener('change', function (e) {
-                const choices = e.target.selectedOptions;
-                const values = Array.from(choices).map(option => option.value);
-
-                if (values.includes('JavaScript') || values.includes('TypeScript')) {
-                    suggestSkill(frontendSelect, 'React');
-                    suggestSkill(frontendSelect, 'Next.js');
-                }
-            });
-        }
-        // Location auto-detection
-        async function detectUserLocation() {
-            try {
-                const response = await fetch('https://ipapi.co/json/');
-                const data = await response.json();
-                const locationInput = document.querySelector('#onboardingForm #location');
-                if (data.city && data.country_name) {
-                    locationInput.value = `${data.city}, ${data.country_name}`;
-                    const event = new Event('input');
-                    locationInput.dispatchEvent(event);
-                }
-            } catch (error) {
-                console.log('Location detection failed:', error);
-            }
-        }
     </script>
     <!-- End script -->
     <!-- Begin chat bot -->
