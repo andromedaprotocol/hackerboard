@@ -407,7 +407,7 @@
 
                         // Define the callback function before creating the script
                         window[callbackName] = function (response) {
-                            delete window[callbackName]; // Clean up
+                            delete window[callbackName];
                             if (script.parentNode) script.parentNode.removeChild(script);
 
                             if (response && response.result === "success") {
@@ -424,14 +424,13 @@
                             reject(new Error('Failed to load the script'));
                         };
 
-                        // Create URL with parameters
-                        const params = new URLSearchParams({
-                            callback: callbackName,
-                            data: JSON.stringify(data)
-                        });
+                        // Encode data manually to ensure proper formatting
+                        const encodedData = encodeURIComponent(JSON.stringify(data))
+                            .replace(/'/g, '%27')
+                            .replace(/"/g, '%22');
 
-                        // Set script source
-                        script.src = `${baseUrl}?${params.toString()}`;
+                        // Build URL manually to ensure proper encoding
+                        script.src = `${baseUrl}?callback=${callbackName}&data=${encodedData}`;
 
                         // Add script to document
                         document.body.appendChild(script);
