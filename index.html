@@ -315,12 +315,9 @@
             // Call the function to load the form
             loadForm();
 
-            // Move multipleSelects to a higher scope
-            let multipleSelects; // Declare at the top level
-
             function initializeFormInteractions() {
-                // Initialize multipleSelects
-                multipleSelects = document.querySelectorAll('#onboardingForm select[multiple]');
+                // Re-initialize Choices.js for the selects within the loaded form
+                const multipleSelects = document.querySelectorAll('#onboardingForm select[multiple]');
                 multipleSelects.forEach(select => {
                     new Choices(select, { removeItemButton: true });
                 });
@@ -484,16 +481,12 @@
                         // Reset form fields
                         formElement.reset();
 
-                        // Reset Choices.js selections
-                        if (multipleSelects) {
-                            multipleSelects.forEach(select => {
-                                const choicesInstance = Choices.get(select);
-                                if (choicesInstance) {
-                                    choicesInstance.removeActiveItems();
-                                    choicesInstance.setChoiceByValue('');
-                                }
-                            });
-                        }
+                        // Reset Choices.js selections using the stored instances
+                        const choicesInstances = Array.from(multipleSelects).map(select => Choices.for(select));
+                        choicesInstances.forEach(instance => {
+                            instance.removeActiveItems(); // Remove selected items
+                            instance.setChoiceByValue(''); // Reset to placeholder
+                        });
                     }
 
                 } catch (error) {
